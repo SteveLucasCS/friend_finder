@@ -32,7 +32,7 @@ var friends = [{
     name: 'Kyle',
     image: 'https://vignette.wikia.nocookie.net/southpark/images/9/95/Kyle-broflovski.png/revision/latest?cb=20170725131924',
     scores: ['2', '4', '5', '4', '2', '2', '5', '4', '5', '2']
-  } 
-] 
+  }
+];
 
 module.exports = friends;

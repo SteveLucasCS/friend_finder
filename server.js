@@ -4,13 +4,11 @@
 var express = require("express");
 var path = require("path");
 var api = require('./app/routing/api_routes');
-var getParrotGif = require('fetch-the-parrot').getParrotGif;
 
 // Create express app instance.
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-var friends = require('./app/data/friends.js');
 // Set the port of our application
 // process.env.PORT lets the port be set by Heroku
 var PORT = process.env.PORT || 3000;
@@ -29,17 +27,21 @@ app.get('/survey', function(req, res) {
 });
 
 app.get('/api/friends', function(req, res) {
-  res.send(friends);
+  res.send(api.friends);
+});
+
+app.get('/api/parrots', function(req, res) {
+  res.send(api.parrots);
 });
 
 app.post('/api/survey', function(req, res) {
-  var parrot = {
-    name: 'Party Parrot',
-    image: 'https://ppaas.herokuapp.com/partyparrot'
-  }
-  res.send(parrot);
-  // res.send(api.getBestMatch(req.body));
+  res.send(api.getBestMatch(req.body, 'friend'));
 });
+
+app.post('/api/parrot', function(req, res) {
+  res.send(api.getBestMatch(req.body, 'parrot'));
+});
+
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {

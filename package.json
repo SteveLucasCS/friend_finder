@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/SteveLucasCS/friend_finder#readme",
   "dependencies": {
-    "express": "^4.16.4",
-    "fetch-the-parrot": "^2.0.0"
+    "express": "^4.16.4"
   }
 }

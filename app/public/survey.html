@@ -11,6 +11,18 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
   <link rel="icon" href="https://ppaas.herokuapp.com/partyparrot">
+  <!-- Rainbow background animation -->
+  <!-- adapted from: https://codepen.io/nohoid/pen/kIfto-->
+  <style>
+    .rainbow { 
+      background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+      background-size: 1800% 1800%;-webkit-animation: rainbow 2s linear infinite;-z-animation: rainbow 2s linear infinite;-o-animation: rainbow 2s linear infinite;animation: rainbow 2s linear infinite;}@-webkit-keyframes rainbow {0%{background-position:0% 82%}50%{background-position:100% 19%}100%{background-position:0% 82%}}@-moz-keyframes rainbow {0%{background-position:0% 82%}50%{background-position:100% 19%}100%{background-position:0% 82%}}@-o-keyframes rainbow {0%{background-position:0% 82%}50%{background-position:100% 19%}100%{background-position:0% 82%}}@keyframes rainbow { 0%{background-position:0% 82%}50%{background-position:100% 19%}100%{background-position:0% 82%}
+    }
+  </style>
+  <!-- form sizing -->
+  <style>
+    .form-control{width: auto !important;}.form-control-lg{width: 100% !important;}
+  </style>
 </head>
 
 <body cz-shortcut-listen="true">
@@ -30,7 +42,7 @@
       <ol style="padding: 1em;">
         <li>
           <h4>Your mind is always buzzing with unexplored ideas and plans.</h4>
-          <select class="custom-select" id="qOne">
+          <select class="form-control score" id="qOne">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -42,7 +54,7 @@
 
         <li>
           <h4>Generally speaking, you rely more on your experience than your imagination.</h4>
-          <select class="custom-select" id="qTwo">
+          <select class="form-control score" id="qTwo">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -54,7 +66,7 @@
 
         <li>
           <h4>You find it easy to stay relaxed and focused even when there is some pressure.</h4>
-          <select class="custom-select" id="qThree">
+          <select class="form-control score" id="qThree">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -66,7 +78,7 @@
 
         <li>
           <h4>You rarely do something just out of sheer curiosity.</h4>
-          <select class="custom-select" id="qFour">
+          <select class="form-control score" id="qFour">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -78,7 +90,7 @@
 
         <li>
           <h4>People can rarely upset you.</h4>
-          <select class="custom-select" id="qFive">
+          <select class="form-control score" id="qFive">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -90,7 +102,7 @@
 
         <li>
           <h4>It is often difficult for you to relate to other people’s feelings.</h4>
-          <select class="custom-select" id="qSix">
+          <select class="form-control score" id="qSix">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -102,7 +114,7 @@
 
         <li>
           <h4>In a discussion, truth should be more important than people’s sensitivities.</h4>
-          <select class="custom-select" id="qSeven">
+          <select class="form-control score" id="qSeven">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -114,7 +126,7 @@
 
         <li>
           <h4>You rarely get carried away by fantasies and ideas.</h4>
-          <select class="custom-select" id="qEight">
+          <select class="form-control score" id="qEight">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -127,7 +139,7 @@
         <li>
           <h4>You think that everyone’s views should be respected regardless of whether they are supported by facts or
             not.</h4>
-          <select class="custom-select" id="qNine">
+          <select class="form-control score" id="qNine">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -139,7 +151,7 @@
 
         <li>
           <h4>You feel more energetic after spending time with a group of people.</h4>
-          <select class="custom-select" id="qTen">
+          <select class="form-control score" id="qTen">
             <option selected>--</option>
             <option value="1">1 (Strongly Disagree)</option>
             <option value="2">2</option>
@@ -150,7 +162,12 @@
         </li>
       </ol>
       <button type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#bffModal" style="width: 8em; margin-bottom: 2em; margin-left: 1em;">
-        Submit</button>
+        Find a Friend
+      </button>
+      <button type="button" class="btn btn-primary btn-lg rainbow" id="parrot" data-toggle="modal" data-target="#bffModal"
+        style="width: 8em; margin-bottom: 2em; margin-left: 1em;">
+        Find a Parrot
+      </button>
     </form>
 
 
@@ -166,8 +183,8 @@
             </button>
           </div>
           <div class="modal-body text-center">
-            <h3><span id="match-name"></span></h3>
-            <img id="match-img" style="width: 50%; height: auto;"/>
+            <h3 style="margin: 0 auto 1em auto;"><span id="match-name"></span></h3>
+            <img id="match-img" style="width: 60%; max-width: 200px; height: auto;" />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Awesome!</button>
@@ -176,8 +193,16 @@
       </div>
     </div>
 
-
+    <footer class="footer">
+      <div class="container">
+        <p>
+          <a href="/api/friends">API Friends List</a> | <a href="/api/parrots">API Parrot List</a> | 
+          <a href="https://github.com/stevelucascs/friend_finder">GitHubRepo</a>
+        </p>
+      </div>
+    </footer>
   </div> <!-- end content container   -->
+
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery.js"></script>
@@ -187,11 +212,11 @@
     crossorigin="anonymous"></script>
 
   <script>
-    $("#survey").on("submit", function(event) {
+    $("#survey").on("submit", function (event) {
       // Make sure to preventDefault on a submit event.
       event.preventDefault();
       var scores = [];
-      $('.custom-select', '#survey').each(function() {
+      $('.score', '#survey').each(function () {
         if (this.value == '--') {
           scores.push('3'); // undecided/neutral is default
         } else {
@@ -206,11 +231,36 @@
       };
 
       // Send the POST request.
-      $.post("/api/survey", surveyData, function(res) {
+      $.post("/api/survey", surveyData, function (res) {
         $("#match-name").text(res.name);
         $("#match-img").attr("src", res.image);
       });
+    });
 
+    // When the adventurous press the parrot button
+    $("#parrot").on("click", function (event) {
+      // Make sure to preventDefault on a submit event.
+      event.preventDefault();
+      var scores = [];
+      $('.score', '#survey').each(function () {
+        if (this.value == '--') {
+          scores.push('3'); // undecided/neutral is default
+        } else {
+          scores.push(this.value);
+        }
+      });
+      // [name=plan] will find an element with a "name" attribute equal to the string "plan"
+      var surveyData = {
+        name: $("#name").val().trim(),
+        image: $("#imgUrl").val().trim(),
+        scores: scores
+      };
+
+      // Send the POST request.
+      $.post("/api/parrot", surveyData, function (res) {
+        $("#match-name").text(res.name);
+        $("#match-img").attr("src", res.image);
+      });
     });
   </script>
 </body>
