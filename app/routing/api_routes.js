@@ -1,28 +1,27 @@
 /**
  * Does whatever the API needs to do, then returns data to the server, which outputs the data to the user.
  */
-var mysql = require("mysql");
-var responseData;
-
-// MySQL DB Connection Information (remember to change this with our specific credentials)
-var connection = mysql.createConnection({
-  host: "localhost",
-  port: 3307,
-  user: "root",
-  password: "root",
-  database: "friendfinder_db"
-});
-
-// Initiate MySQL Connection.
-connection.connect(function(err) {
-  if (err) {
-    console.error("mysql: error connecting: " + err.stack);
-    return;
-  }
-  console.log("mysql: connected as id " + connection.threadId);
-});
+var friends = require('../data/friends');
 
 // Functions and logic goes here
+var api = {
+  getBestMatch: function(user) {
+    // the difference between input and best match's score
+    var bff = {
+      name: 'You have no friends.'
+    };
+    var bestMatch = 999;
+    var curDif = 0;
+    friends.forEach(function(friend) {
+      for (var i = 0; i < friend.scores.length; i++) {
+        curDif += Math.abs(friend.scores[i] - user.scores[i]);
+      }
+      if (curDif <= bestMatch) {
+        bff = friend;
+      }
+    });
+    return bff;
+  }
+};
 
-
-module.exports =  responseData;
+module.exports = api;
